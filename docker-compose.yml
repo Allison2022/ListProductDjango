@@ -9,6 +9,9 @@ services:
       MYSQL_DATABASE: productsDB
       MYSQL_PASSWORD: ingeniero010
       MYSQL_ROOT_PASSWORD: ingeniero010
+    volumes:
+      - /ApplistadoProductos/mysql_data:/var/lib/mysql
+      - /ApplistadoProductos/mysqld:/var/lib/mysqld
     ports:
       - "3306:3306"
       
@@ -18,6 +21,7 @@ services:
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
+      - /ApplistadoProductos/mysqld:/var/lib/mysqld
     ports:
       - "8000:8000"
     depends_on:

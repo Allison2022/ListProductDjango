@@ -1,7 +1,0 @@
-# my.cnf
-[client]
-database = 'listelementDB'
-user = 'erik1288'
-password = 'ingeniero010'
-host = 'db'
-default-character-set = utf8
