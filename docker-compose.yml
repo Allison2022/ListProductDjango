@@ -1,0 +1,24 @@
+services:
+
+  db:
+    image: mysql:8.0.32
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: productsDB
+      MYSQL_PASSWORD: ingeniero010
+      MYSQL_ROOT_PASSWORD: ingeniero010
+    ports:
+      - "3306:3306"
+      
+  web:
+    build: .
+    container_name: django
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
