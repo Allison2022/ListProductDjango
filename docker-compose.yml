@@ -1,26 +1,38 @@
+version: "3.9"
+
 services:
+  
+  web:
+    build: .
+    depends_on:
+      - db
+    restart: on-failure
+    command: python3 manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
 
   db:
-    image: mysql:8.0.32
-    container_name: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    image: mysql:8.0.31-debian
     restart: always
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_DATABASE: productsDB
       MYSQL_USER: erik1288
       MYSQL_PASSWORD: ingeniero010
       MYSQL_ROOT_PASSWORD: ingeniero010
     volumes:
-      - /ApplistadoProductos:/etc/mysql/conf.d
-      
-  web:
-    build: .
-    container_name: django
-    command: python3 manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-      - /ApplistadoProductos:/etc/mysql/conf.d
+      - ./ApplistadoProductos:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
     ports:
-      - "8000:8000"
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
     depends_on:
       - db
