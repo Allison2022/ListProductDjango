@@ -4,15 +4,23 @@ services:
   
   web:
     build: .
-    depends_on:
-      - db
-    restart: on-failure
+    restart: always
+    container_name: django_udemy
     command: python3 manage.py runserver 0.0.0.0:8000
-    ports:
-      - "8000:8000"
     volumes:
       - .:/code
-
+    ports:
+      - "8000:8000"
+    environment:
+      MYSQL_DATABASE: productsDB
+      MYSQL_USER: erik1288
+      MYSQL_PASSWORD: ingeniero010
+      MYSQL_ROOT_PASSWORD: ingeniero010
+    depends_on:
+      - db
+    
+    
+    
   db:
     image: mysql:8.0.31-debian
     restart: always

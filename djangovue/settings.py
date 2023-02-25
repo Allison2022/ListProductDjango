@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'listelement',
     'rest_framework',
     'comment',
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [
