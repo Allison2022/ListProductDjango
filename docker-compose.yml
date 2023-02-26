@@ -18,9 +18,7 @@ services:
       MYSQL_ROOT_PASSWORD: ingeniero010
     depends_on:
       - db
-    
-    
-    
+      
   db:
     image: mysql:8.0.31-debian
     restart: always

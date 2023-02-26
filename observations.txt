@@ -1,0 +1,4 @@
+1. para trabajar con el campo FieldFile, recuerdar especificar en tu form.html la propiedad enctype="multipart/form-data" 
+y aparte de eso hay que preguntar al lado de if request.POST en la view, tambien si request.FILES
+
+2. para utilizar la propiedad cleaned_data, recordar que primero hay que preguntar si el form.is_valid()
