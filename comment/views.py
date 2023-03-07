@@ -41,7 +41,7 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def contact(request):
     if request.method == 'POST':
-        print(request.FILES)
+        #print(request.FILES)
         form = ContactForm(request.POST, request.FILES)
         if form.is_valid():
             contact = Contact()
@@ -50,9 +50,11 @@ def contact(request):
             contact.email = form.cleaned_data["email"]
             contact.phone = form.cleaned_data["phone"]
             contact.date_birth = form.cleaned_data["date_birth"]
-            contact.document = form.cleaned_data["document"]
+            if "document" in request.FILES:
+                contact.document = form.cleaned_data["document"]
             #contact.save()
-            print("valido "+form.cleaned_data["typeContact"])
+            #print("valido: "+ str(form.cleaned_data["typeContact"].id))
+            print("Sexo: "+ form.cleaned_data["sex"])
         else:
             print("invalid")
     else:

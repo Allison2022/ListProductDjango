@@ -13,7 +13,10 @@ class Contact(models.Model):
     email = models.EmailField(max_length=70)
     phone = models.CharField(max_length=13)
     date_birth = models.DateField()
-    document = models.FileField(upload_to="uploads/contact")
+    document = models.FileField(upload_to="uploads/contact", default=None, null=True)
 
-class Typecontact(models.Model):
+class TypeContact(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
