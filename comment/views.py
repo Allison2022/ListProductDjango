@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from .models import Comment, Contact
 from .forms import CommentForm, ContactForm
 
@@ -16,7 +17,7 @@ def add(request):
         form = CommentForm(request.POST)
         if form.is_valid():
             form.save(commit=True)
-            return redirect('index')
+            return redirect('comment:index')
     else:
         form = CommentForm()
     return render(request, 'add.html', {'form':form})
@@ -29,7 +30,7 @@ def update(request, pk):
         print(form.errors.as_text())
         if form.is_valid():
             form.save(commit=True)
-            return redirect('update', pk=comment.id)
+            return redirect('comment:update', pk=comment.id)
     else:
         form = CommentForm(instance=comment)
     return render(request, 'update.html', {'form':form, 'comment':comment})
@@ -50,13 +51,16 @@ def contact(request):
             contact.email = form.cleaned_data["email"]
             contact.phone = form.cleaned_data["phone"]
             contact.date_birth = form.cleaned_data["date_birth"]
+            contact.sex = form.cleaned_data["sex"]
+            contact.type_contact = form.cleaned_data["type_contact"]
             if "document" in request.FILES:
                 contact.document = form.cleaned_data["document"]
-            #contact.save()
+            contact.save()
             #print("valido: "+ str(form.cleaned_data["typeContact"].id))
-            print("Sexo: "+ form.cleaned_data["sex"])
+            messages.add_message(request, messages.SUCCESS, "Contacto creado con exito")
+            return redirect("comment:contact")
         else:
-            print("invalid")
+            return "data invalid"
     else:
         form = ContactForm()
     return render(request, 'contact.html', {'form':form})
